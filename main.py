@@ -1,7 +1,4 @@
-from aan import get_alternative_article, in_memory
-import subprocess
-
-import pandas as pd
+from aan import get_alternative_article, load_article_df
 
 from flask import Flask
 
@@ -10,10 +7,7 @@ app.config['JSON_SORT_KEYS'] = False
 
 @app.before_first_request
 def load_articles():
-    chunksize = 10000
-    tfr = pd.read_csv('./articles_w_sentiment.csv', delimiter='\t', chunksize=chunksize, iterator=True)
-    valid_article_df = pd.concat(tfr, ignore_index=True)
-    in_memory(valid_article_df)
+    load_article_df()
 
 @app.route('/by_index/<int:index>')
 def get_article_by_index(index):
@@ -23,7 +17,6 @@ def get_article_by_index(index):
     else:
         return({"error": "Failed to find a valid article"}, 400)
     
-
 @app.route('/by_title/title')
 def get_article_by_title(title):
     index = index_from_title(title)

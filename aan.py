@@ -1,18 +1,15 @@
-import pandas as pd
-import numpy as np
-
-from itertools import starmap
-
 from collections import Counter
-
-from sklearn.metrics.pairwise import cosine_similarity
+from itertools import starmap
+import numpy as np
+import pandas as pd
 from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
 
 valid_article_df = None
 
-def in_memory(df):
+def load_article_df():
   global valid_article_df
-  valid_article_df = df
+  valid_article_df = pd.read_csv('./articles_w_sentiment.csv', delimiter='\t')
 
 def contains_topic(other_topics, input_article_topic):
   for topic in other_topics:
