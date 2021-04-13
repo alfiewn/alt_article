@@ -9,7 +9,7 @@ app.config['JSON_SORT_KEYS'] = False
 
 @app.before_first_request
 def load_articles():
-    # subprocess.run(["gdown", "--id", "1--bWl8eSVU0WPD-MH4E_elOaP8KU_NeJ"])
+    subprocess.run(["gdown", "--id", "1--bWl8eSVU0WPD-MH4E_elOaP8KU_NeJ"])
     valid_article_df = pd.read_csv('./articles_w_sentiment.csv', delimiter='\t')
     in_memory(valid_article_df)
 
@@ -26,3 +26,6 @@ def get_article_by_index(index):
 def get_article_by_title(title):
     index = index_from_title(title)
     return get_alternative_article(index)
+
+if __name__ == '__main__':
+    app.run(threaded=True, port=5000)
