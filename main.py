@@ -10,7 +10,9 @@ app.config['JSON_SORT_KEYS'] = False
 @app.before_first_request
 def load_articles():
     subprocess.run(["gdown", "--id", "1--bWl8eSVU0WPD-MH4E_elOaP8KU_NeJ"])
-    valid_article_df = pd.read_csv('./articles_w_sentiment.csv', delimiter='\t')
+    chunksize = 10000
+    tfr = pd.read_csv('./articles_w_sentiment.csv', delimiter='\t', chunksize=chunksize, iterator=True)
+    valid_article_df = pd.concat(tfr, ignore_index=True)
     in_memory(valid_article_df)
 
 @app.route('/by_index/<int:index>')
