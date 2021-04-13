@@ -76,7 +76,7 @@ def get_alternative_article(input_article_index):
   by_similarity = matching_article_df.sort_values(
       by='similarity', 
       ascending=False
-      ).drop(['nid', 'category', 'abstract'], axis=1)
+      )
 
   by_similarity['similarity_rank'] = rankings
 
