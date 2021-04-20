@@ -41,7 +41,12 @@ def find_balance(input_article_sentiment, alternative_sentiment):
 def find_ranking(similarity_ranking, sentiment_ranking):
   return (similarity_ranking + sentiment_ranking)
 
-def get_alternative_article(input_article_index):
+
+def get_by_title(title):
+  index = valid_article_df[valid_article_df['title'].str.strip()==(title)].index
+  return (False, {"error": f"No article found with title: {title}"}) if index.empty else get_by_index(index[0])
+
+def get_by_index(input_article_index):
   input_article_body = valid_article_df['body'][input_article_index]
   input_article_url = valid_article_df['url'][input_article_index]
 
@@ -88,9 +93,9 @@ def get_alternative_article(input_article_index):
       ).iloc(0)
 
   if not alternative_article:
-    return None
+    return (False, {"error": "Failed to find a valid alternative article"})
   else:
-    return {
+    return (True, {
               "input_body": input_article_body,
               "input_url": input_article_url,
               "input_sentiment": input_article_sentiment,
@@ -99,4 +104,4 @@ def get_alternative_article(input_article_index):
               "alternative_sentiment": eval(alternative_article[0]['sentiment'])[0],
               "similarity": alternative_article[0]['similarity'],
               "sentiment_balance": alternative_article[0]['sentiment_balance']
-    } 
+    })

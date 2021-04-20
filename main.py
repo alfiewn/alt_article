@@ -1,4 +1,4 @@
-from aan import get_alternative_article, load_article_df
+from aan import load_article_df, get_by_index, get_by_title
 
 from flask import Flask
 
@@ -11,16 +11,19 @@ def load_articles():
 
 @app.route('/by_index/<int:index>')
 def get_article_by_index(index):
-    alternative_article = get_alternative_article(index)
-    if alternative_article:
-        return (get_alternative_article(index), 200)
+    success, response = get_by_index(index)
+    if success:
+        return(response, 200)
     else:
-        return({"error": "Failed to find a valid article"}, 400)
+        return(response, 400)
     
-@app.route('/by_title/title')
+@app.route('/by_title/<string:title>')
 def get_article_by_title(title):
-    index = index_from_title(title)
-    return get_alternative_article(index)
+    success, response = get_by_title(title)
+    if success:
+        return(response, 200)
+    else:
+        return(response, 400)
 
 if __name__ == '__main__':
     app.run(threaded=True, port=5000)
