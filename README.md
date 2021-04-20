@@ -22,3 +22,9 @@ export FLASK_ENV=development
 
 flask run
 ```
+
+## Run unit tests:
+
+```
+python -m unittest
+```
