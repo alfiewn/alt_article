@@ -1,5 +1,6 @@
 from collections import Counter
 from itertools import starmap
+
 import numpy as np
 import pandas as pd
 from sklearn.feature_extraction.text import CountVectorizer
@@ -39,7 +40,7 @@ def find_balance(input_article_sentiment, alternative_sentiment):
   return round((alternative_sentiment + input_article_sentiment)/2, 3)
 
 def find_ranking(similarity_ranking, sentiment_ranking):
-  return (similarity_ranking + sentiment_ranking)
+  return similarity_ranking + sentiment_ranking
 
 
 def get_by_title(title):

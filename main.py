@@ -1,6 +1,6 @@
-from aan import load_article_df, get_by_index, get_by_title
-
 from flask import Flask
+
+from aan import get_by_index, get_by_title, load_article_df
 
 app = Flask(__name__)
 app.config['JSON_SORT_KEYS'] = False
